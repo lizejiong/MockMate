@@ -1,0 +1,14 @@
+{
+  "name": "ai-interview-coach",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.32.1",
+  "scripts": {
+    "mobile:start": "pnpm --dir apps/mobile start",
+    "mobile:android": "pnpm --dir apps/mobile android",
+    "mobile:ios": "pnpm --dir apps/mobile ios",
+    "mobile:web": "pnpm --dir apps/mobile web",
+    "mobile:lint": "pnpm --dir apps/mobile lint",
+    "mobile:typecheck": "pnpm --dir apps/mobile typecheck"
+  }
+}

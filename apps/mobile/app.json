@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "AI Interview Coach",
+    "slug": "ai-interview-coach",
+    "scheme": "interviewcoach",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.example.aiinterviewcoach"
+    },
+    "android": {
+      "package": "com.example.aiinterviewcoach",
+      "adaptiveIcon": {
+        "backgroundColor": "#0D1117"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-document-picker",
+      "expo-image-picker"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

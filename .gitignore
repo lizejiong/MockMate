@@ -1,0 +1,12 @@
+node_modules/
+.expo/
+dist/
+web-build/
+android/
+ios/
+.env
+.env.*
+*.apk
+*.aab
+*.ipa
+*.xcarchive

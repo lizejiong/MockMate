@@ -19,6 +19,7 @@ pnpm install
 pnpm mobile:start
 pnpm mobile:typecheck
 pnpm mobile:lint
+pnpm mobile:test
 ```
 
 ## 开发规则
@@ -45,6 +46,6 @@ pnpm mobile:lint
 
 ## 验证与 Git
 
-- 常规校验运行 `pnpm mobile:typecheck` 和 `pnpm mobile:lint`。
+- 常规校验运行 `pnpm mobile:typecheck`、`pnpm mobile:lint` 和 `pnpm mobile:test`。
 - 触达原生构建前，优先用 Web / Expo Go 验证。
 - 不要提交 Git，除非用户明确要求；如需提交，提交信息使用中文。

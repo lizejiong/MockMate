@@ -16,6 +16,7 @@ Node 版本使用 20 LTS，建议通过 `.nvmrc` 对齐到 `20.19.0`。
 ```bash
 pnpm mobile:typecheck
 pnpm mobile:lint
+pnpm mobile:test
 ```
 
 ## 目录结构

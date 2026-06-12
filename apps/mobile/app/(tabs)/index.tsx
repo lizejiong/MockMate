@@ -1,12 +1,35 @@
+import { router } from "expo-router";
+import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { AppButton } from "@/components/AppButton";
 import { AppCard } from "@/components/AppCard";
 import { Screen } from "@/components/Screen";
+import { getProviderLabel } from "@/features/model-config/modelConfig";
+import { useModelConfigStore } from "@/features/model-config/useModelConfigStore";
 import { useTheme } from "@/theme/useTheme";
 
 export default function HomeScreen() {
   const theme = useTheme();
+  const { preferences, load, hasActiveConfig } = useModelConfigStore();
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  const requireModelConfig = async (reason: "interview" | "resume") => {
+    const isConfigured = await hasActiveConfig();
+
+    if (!isConfigured) {
+      router.push({
+        pathname: "/model-config",
+        params: { reason }
+      });
+      return;
+    }
+
+    router.push("/interview");
+  };
 
   return (
     <Screen>
@@ -19,9 +42,20 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.actions}>
-        <AppButton>开始面试</AppButton>
-        <AppButton variant="secondary">简历诊断</AppButton>
+        <AppButton onPress={() => void requireModelConfig("interview")}>开始面试</AppButton>
+        <AppButton variant="secondary" onPress={() => void requireModelConfig("resume")}>
+          简历诊断
+        </AppButton>
       </View>
+
+      <AppCard tone={preferences ? "success" : "info"}>
+        <Text style={[styles.cardTitle, { color: theme.colors.textPrimary }]}>模型配置</Text>
+        <Text style={[styles.body, { color: theme.colors.textSecondary }]}>
+          {preferences
+            ? `${getProviderLabel(preferences.provider)} · ${preferences.model}`
+            : "开始 AI 功能前需要先配置 BYOK 模型。"}
+        </Text>
+      </AppCard>
 
       <AppCard tone="warning">
         <Text style={[styles.cardTitle, { color: theme.colors.textPrimary }]}>持续弱点</Text>

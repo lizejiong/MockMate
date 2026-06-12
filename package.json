@@ -9,6 +9,7 @@
     "mobile:ios": "pnpm --dir apps/mobile ios",
     "mobile:web": "pnpm --dir apps/mobile web",
     "mobile:lint": "pnpm --dir apps/mobile lint",
+    "mobile:test": "pnpm --dir apps/mobile test",
     "mobile:typecheck": "pnpm --dir apps/mobile typecheck"
   }
 }

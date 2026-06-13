@@ -15,12 +15,19 @@ export class OpenAICompatibleProvider implements ModelProvider {
   private readonly model?: string;
   private readonly fetcher: Fetcher;
 
-  constructor({ apiKey, baseUrl, model, fetcher = fetch }: OpenAICompatibleProviderOptions) {
+  constructor({ apiKey, baseUrl, model, fetcher }: OpenAICompatibleProviderOptions) {
     this.apiKey = apiKey;
     /** Normalize once so callers can paste Base URLs with trailing slashes. */
     this.baseUrl = baseUrl.replace(/\/+$/, "");
     this.model = model;
-    this.fetcher = fetcher;
+    /**
+     * Browser fetch implementations validate their receiver. Binding the
+     * default fetch prevents "Illegal invocation" when the provider stores it
+     * and later calls it from the class instance, while injected fetchers stay
+     * untouched so tests and future native adapters can control their own call
+     * semantics.
+     */
+    this.fetcher = fetcher ?? globalThis.fetch.bind(globalThis);
   }
 
   async chat(input: ChatRequest): Promise<ChatResponse> {

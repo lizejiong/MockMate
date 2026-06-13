@@ -3,6 +3,47 @@ import { describe, expect, it, vi } from "vitest";
 import { OpenAICompatibleProvider } from "./openAICompatibleProvider";
 
 describe("OpenAICompatibleProvider", () => {
+  it("binds the default fetch to the global runtime on web", async () => {
+    const originalFetch = globalThis.fetch;
+    const strictFetch = vi.fn(async function (this: unknown) {
+      if (this !== globalThis) {
+        throw new TypeError("Illegal invocation");
+      }
+
+      return new Response(
+        JSON.stringify({
+          choices: [
+            {
+              message: {
+                content: "connected"
+              }
+            }
+          ]
+        }),
+        {
+          status: 200,
+          headers: {
+            "content-type": "application/json"
+          }
+        }
+      );
+    });
+
+    globalThis.fetch = strictFetch as typeof fetch;
+
+    try {
+      const provider = new OpenAICompatibleProvider({
+        apiKey: "sk-test",
+        baseUrl: "https://api.example.com/v1",
+        model: "mock-model"
+      });
+
+      await expect(provider.testConnection()).resolves.toBe(true);
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
+  });
+
   it("sends an OpenAI-compatible chat request and returns assistant content", async () => {
     const fetchMock = vi.fn(async () => {
       return new Response(

@@ -28,7 +28,7 @@ export default function HomeScreen() {
       return;
     }
 
-    router.push("/interview");
+    router.push(reason === "resume" ? "/resume-diagnosis" : "/interview");
   };
 
   return (
